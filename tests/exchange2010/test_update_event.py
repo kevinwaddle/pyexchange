@@ -94,6 +94,20 @@ class Test_UpdatingAnEvent(unittest.TestCase):
     assert TEST_EVENT_UPDATED.body in HTTPretty.last_request.body.decode('utf-8')
 
   @httprettified
+  def test_can_set_availability(self):
+
+    HTTPretty.register_uri(HTTPretty.POST, FAKE_EXCHANGE_URL,
+                           responses=[
+                               self.get_change_key_response,
+                               self.update_event_response,
+                            ])
+
+    self.event.availability = TEST_EVENT_UPDATED.availability
+    self.event.update()
+
+    assert TEST_EVENT_UPDATED.availability in HTTPretty.last_request.body.decode('utf-8')
+
+  @httprettified
   def test_can_set_text_body(self):
 
     HTTPretty.register_uri(HTTPretty.POST, FAKE_EXCHANGE_URL,

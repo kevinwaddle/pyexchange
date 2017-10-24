@@ -14,7 +14,7 @@ from pyexchange.exchange2010.soap_request import EXCHANGE_DATE_FORMAT, EXCHANGE_
 # don't remove this - a few tests import stuff this way
 from ..fixtures import *  # noqa
 
-EventFixture = namedtuple('EventFixture', ['id', 'change_key', 'calendar_id', 'subject', 'location', 'start', 'end', 'body'])
+EventFixture = namedtuple('EventFixture', ['id', 'change_key', 'calendar_id', 'subject', 'location', 'availability', 'start', 'end', 'body'])
 RecurringEventDailyFixture = namedtuple(
   'RecurringEventDailyFixture',
   [
@@ -58,6 +58,7 @@ TEST_EVENT = EventFixture(id=u'AABBCCDDEEFF',
                           calendar_id='calendar',
                           subject=u'нyвrιd ѕolαr eclιpѕe',
                           location=u'söüth päċïfïċ (40.1°S 123.7°W)',
+                          availability=u'Busy',
                           start=datetime(year=2050, month=5, day=20, hour=20, minute=42, second=50, tzinfo=utc),
                           end=datetime(year=2050, month=5, day=20, hour=21, minute=43, second=51, tzinfo=utc),
                           body=u'rärr ï äm ä dïnösäür')
@@ -68,6 +69,7 @@ TEST_CONFLICT_EVENT = EventFixture(
   calendar_id='calendar',
   subject=u'mч cσnflíctíng єvєnt',
   location=u'söüth päċïfïċ (40.1°S 123.7°W)',
+  availability=u'Busy',
   start=datetime(year=2050, month=5, day=20, hour=20, minute=42, second=50, tzinfo=utc),
   end=datetime(year=2050, month=5, day=20, hour=21, minute=43, second=51, tzinfo=utc),
   body=u'rärr ï äm ä dïnösäür',
@@ -81,6 +83,7 @@ TEST_EVENT_UPDATED = EventFixture(id=u'AABBCCDDEEFF',
                                   calendar_id='calendar',
                                   subject=u'spärklÿ hämstër sümmër bäll',
                                   location=u'häppÿ fröġ länd',
+                                  availability=u'Free',
                                   start=datetime(year=2040, month=4, day=19, hour=19, minute=41, second=49, tzinfo=utc),
                                   end=datetime(year=2060, month=4, day=19, hour=20, minute=42, second=50, tzinfo=utc),
                                   body=u'śő śhíńý śő véŕý śhíńý')
@@ -91,6 +94,7 @@ TEST_EVENT_MOVED = EventFixture(
   calendar_id='calendar',
   subject=u'нyвrιd ѕolαr eclιpѕe',
   location=u'söüth päċïfïċ (40.1°S 123.7°W)',
+  availability=u'Busy',
   start=datetime(year=2050, month=5, day=20, hour=20, minute=42, second=50, tzinfo=utc),
   end=datetime(year=2050, month=5, day=20, hour=21, minute=43, second=51, tzinfo=utc),
   body=u'rärr ï äm ä dïnösäür',
@@ -156,6 +160,7 @@ for day in range(20, 25):
       change_key=u'GGHHIIJJKKLLMM',
       subject=u'нyвrιd ѕolαr eclιpѕe',
       location=u'söüth päċïfïċ (40.1°S 123.7°W)',
+      availability=u'Busy',
       start=datetime(year=2050, month=5, day=day, hour=20, minute=42, second=50, tzinfo=utc),
       end=datetime(year=2050, month=5, day=day, hour=21, minute=43, second=51, tzinfo=utc),
       body=u'rärr ï äm ä dïnösäür',

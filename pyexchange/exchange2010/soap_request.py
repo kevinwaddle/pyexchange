@@ -296,6 +296,7 @@ def new_event(event):
             <t:Start></t:Start>
             <t:End></t:End>
             <t:Location></t:Location>
+            <t:LegacyFreeBusyStatus></t:LegacyFreeBusyStatus>
             <t:RequiredAttendees>
                 {% for attendee_email in meeting.required_attendees %}
                 <t:Attendee>
@@ -361,6 +362,9 @@ def new_event(event):
     calendar_node.append(T.IsAllDayEvent('true'))
 
   calendar_node.append(T.Location(event.location or u''))
+
+  if event.availability:
+    calendar_node.append(T.LegacyFreeBusyStatus(event.availability))
 
   if event.required_attendees:
     calendar_node.append(resource_node(element=T.RequiredAttendees(), resources=event.required_attendees))
@@ -495,6 +499,10 @@ def update_item(event, updated_attributes, calendar_item_update_operation_type):
   #     update_property_node(field_uri="calendar:LegacyFreeBusyStatus", node_to_insert=T.LegacyFreeBusyStatus("Busy"))
   #   )
 
+  if u'availability' in updated_attributes:
+    update_node.append(
+      update_property_node(field_uri="item:LegacyFreeBusyStatus", node_to_insert=T.LegacyFreeBusyStatus(event.availability, LegacyFreeBusyStatusType="Text"))
+    )
   if u'html_body' in updated_attributes:
     update_node.append(
       update_property_node(field_uri="item:Body", node_to_insert=T.Body(event.html_body, BodyType="HTML"))

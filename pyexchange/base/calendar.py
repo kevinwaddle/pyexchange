@@ -47,6 +47,7 @@ class BaseExchangeCalendarEvent(object):
   start = None
   end = None
   location = None
+  availability = None
   html_body = None
   text_body = None
   attachments = None
